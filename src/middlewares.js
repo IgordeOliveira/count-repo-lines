@@ -1,3 +1,5 @@
+const isGithubUrl = require('is-github-url')
+
 function notFound(req, res, next) {
   res.status(404);
   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
@@ -15,7 +17,19 @@ function errorHandler(err, req, res, next) {
   });
 }
 
+function validateRepoUrl(req, res, next) {
+  if (isGithubUrl(req.query.repo, { repository: true })) {
+    next()
+  } else {
+    res.status(422);
+    res.json({
+      error: 'repository url invalid',
+    });
+  }
+}
+
 module.exports = {
   notFound,
-  errorHandler
+  errorHandler,
+  validateRepoUrl
 };
