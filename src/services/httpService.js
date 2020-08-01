@@ -23,6 +23,6 @@ const httpService = setup({
     store
   },
 })
-httpService.interceptors.request.use(AxiosLogger.requestLogger);
+// httpService.interceptors.request.use(AxiosLogger.requestLogger);
 
 module.exports = { client: httpService }
