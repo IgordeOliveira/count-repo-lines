@@ -1,4 +1,5 @@
 const { setup, RedisStore } = require('axios-cache-adapter')
+const AxiosLogger = require('axios-logger')
 const redis = require('redis')
 // setup redis client
 const client = redis.createClient({
@@ -20,7 +21,8 @@ const httpService = setup({
     maxAge: 30 * 60 * 1000,
     // add redis as store for cache
     store
-  }
+  },
 })
+httpService.interceptors.request.use(AxiosLogger.requestLogger);
 
 module.exports = { client: httpService }

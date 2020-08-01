@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.18.1",
     "axios-cache-adapter": "^2.5.0",
     "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
@@ -26,7 +26,8 @@
     "helmet": "^3.23.3",
     "is-github-url": "^1.2.2",
     "morgan": "^1.10.0",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "axios-logger": "^2.3.1"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
