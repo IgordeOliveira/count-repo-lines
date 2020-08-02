@@ -1553,6 +1553,11 @@ is-installed-globally@^0.3.1:
     global-dirs "^2.0.1"
     is-path-inside "^3.0.1"
 
+is-json@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/is-json/-/is-json-2.0.1.tgz#6be166d144828a131d686891b983df62c39491ff"
+  integrity sha1-a+Fm0USCihMdaGiRuYPfYsOUkf8=
+
 is-map@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/is-map/-/is-map-2.0.1.tgz#520dafc4307bb8ebc33b813de5ce7c9400d644a1"
@@ -1747,11 +1752,6 @@ lodash.flatmapdeep@^4.10.0:
   version "4.10.0"
   resolved "https://registry.yarnpkg.com/lodash.flatmapdeep/-/lodash.flatmapdeep-4.10.0.tgz#aecefefc0346ffda519fec2f4092fa04ff58fcbd"
   integrity sha1-rs7+/ANG/9pRn+wvQJL6BP9Y/L0=
-
-lodash.flattendeep@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
-  integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=
 
 lodash.groupby@^4.6.0:
   version "4.6.0"

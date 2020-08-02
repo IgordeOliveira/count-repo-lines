@@ -4,6 +4,7 @@ const { ConcurrencyManager } = require('axios-concurrency');
 const AxiosRetry = require('axios-retry');
 const redis = require('redis')
 const axiosDefaults = require('axios/lib/defaults');
+const isJSON = require('is-json');
 
 // setup redis client
 const redisClient = redis.createClient({
@@ -29,15 +30,13 @@ const client = setup({
   transformResponse: axiosDefaults.transformResponse.concat((data, headers) => {
     if (data) {
       let lines
-      try {
+      if (isJSON.strict(data)) {
+        console.log(isJSON(data))
         lines = JSON.stringify(data, null, 2).split('\n').length
-      } catch (e) {
+      } else {
         lines = data.toString().split('\n').length - 1
       }
       headers['content-lines'] = lines
-    }
-    if (headers['content-lines'] === 0) {
-      headers['content-lines'] = JSON.stringify(data, null, 2).split('\n').length - 1
     }
     return data
   })
