@@ -1,44 +1,62 @@
-const express = require('express');
+const express = require('express')
+
 const { client } = require('../services/httpService')
-const { parseListFiles } = require('../services/parseService')
+
+const { parseListFiles, parseFile } = require('../services/parseService')
 const { validateRepoUrl } = require('../middlewares')
 
 // import Router and apply middleware for this specific router
-const router = express.Router();
+const router = express.Router()
 router.use('/repo-count-lines', validateRepoUrl)
 
-async function getFoldersFiles(folders) {
-  await Promise.all(folders.map((folder) => client.get(folder.href)))
-    .then((responses) => {
-      responses.map((response) => parseListFiles(response.data))
-    });
-}
-
-async function getAllFiles(url) {
+async function getFileTree(url) {
   const repoRawHtml = await client.get(url).then((response) => response.data)
   const items = parseListFiles(repoRawHtml)
-  const files = []
-  // eslint-disable-next-line no-restricted-syntax
-  for (const item of items) {
-    if (item.isFolder) {
-      // eslint-disable-next-line no-await-in-loop
-      const itensFromFolder = await getAllFiles(item.href)
-      files.push({ [item.name]: itensFromFolder })
-    } else {
-      files.push(item)
-    }
-  }
-  return files
+
+  const foldersPromises = items.filter((item) => item.isFolder)
+    .map((folder) => getFileTree(folder.href)
+      .then((files) => ({ [folder.name]: files })))
+
+  const filesPromises = items.filter((item) => !item.isFolder)
+    .map((file) => client.get(file.href)
+      .then((response) => {
+        const fileRawHtml = response.data
+        const lineAndSize = parseFile(fileRawHtml)
+        return { ...file, ...lineAndSize }
+      }).catch((err) => ({ ...file, error: err.response.statusText })))
+
+  let foldersFiles = await Promise.allSettled(foldersPromises)
+  foldersFiles = foldersFiles.map((result) => (result.status === 'fulfilled' ? result.value : result.reason))
+
+  let files = await Promise.allSettled(filesPromises)
+  files = files.map((result) => (result.status === 'fulfilled' ? result.value : result.reason))
+
+  return Object.assign(files, foldersFiles)
 }
 
+// function findAllByKey(obj, keyToFind) {
+//   return Object.entries(obj)
+//     .reduce((acc, [key, value]) => ((key === keyToFind)
+//       ? acc.concat(value)
+//       : (typeof value === 'object')
+//         ? acc.concat(findAllByKey(value, keyToFind))
+//         : acc),
+//     [])
+// }
+//
+// async function getAllFiles(fileTree) {
+//   const links = findAllByKey(fileTree, 'href')
+//   const filesPromises = links.map((link) => client.get(link).then((response) => response.data))
+//   return Promise.all(filesPromises)
+// }
+
 router.get('/repo-count-lines', async (req, res) => {
-  const { repo } = req.query;
+  const { repo } = req.query
 
-  const files = await getAllFiles(repo)
+  const files = await getFileTree(repo)
+  // files = await getAllFiles(files)
+  // console.log(files[0])
+  res.json(files)
+})
 
-  res.json({
-    files
-  });
-});
-
-module.exports = router;
+module.exports = router

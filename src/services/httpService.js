@@ -19,7 +19,7 @@ const client = setup({
   // `axios-cache-adapter` options
   cache: {
     // Tell adapter to attempt using response headers
-    readHeaders: true,
+    readHeaders: false,
     // 30 min of cache if dont find maxAge headers
     maxAge: 30 * 60 * 1000,
     // add redis as store for cache
@@ -30,12 +30,12 @@ const client = setup({
 client.interceptors.request.use(AxiosLogger.requestLogger);
 
 // SETUP of axios concurrency to avoid 429 too many request errors
-const MAX_CONCURRENT_REQUESTS = 3;
+const MAX_CONCURRENT_REQUESTS = 2;
 ConcurrencyManager(client, MAX_CONCURRENT_REQUESTS);
 
 // SETUP retry for failed request
 AxiosRetry(client, {
-  retries: 5,
+  retries: 4,
   retryDelay: AxiosRetry.exponentialDelay
 });
 
