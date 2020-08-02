@@ -9,22 +9,17 @@ const parseListFiles = (repoHtml) => {
     return {
       extension: title.split('.').pop(),
       name: title,
-      href: linkFile.attr('href'),
+      href: linkFile.attr('href').replace('/blob', ''),
       isFolder: iconName === 'Directory'
     }
-  });
+  })
   // returning with ToArray because cheerio returns an object of his "type"
   return files.toArray().filter((file) => file.name !== 'Go to parent directory')
 }
 
-const parseFile = (fileHtml) => {
-  const $ = cheerio.load(fileHtml, { normalizeWhitespace: true })
-  const rawContent = $('.repository-content').find('div.text-mono').first().text()
-  const values = rawContent.trim().replace('\n      \n    ', '|').split('|') // clear content
-  return {
-    lines: values[1] ? parseInt(values[0].substr(0, values[0].indexOf(' ')), 10) : undefined, // convert to int
-    size: values[1] || values[0]
-  }
-}
+const parseFile = (response) => ({
+  lines: response.data.toString().split('\n').length - 1, // count lines of file
+  bytes: parseInt(response.headers['content-length'], 10) // get bytes from header
+})
 
 module.exports = { parseListFiles, parseFile }

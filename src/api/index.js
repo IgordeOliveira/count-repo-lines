@@ -1,7 +1,6 @@
 const express = require('express')
 
 const { client } = require('../services/httpService')
-
 const { parseListFiles, parseFile } = require('../services/parseService')
 const { validateRepoUrl } = require('../middlewares')
 
@@ -18,12 +17,11 @@ async function getFileTree(url) {
       .then((files) => ({ [folder.name]: files })))
 
   const filesPromises = items.filter((item) => !item.isFolder)
-    .map((file) => client.get(file.href)
+    .map((file) => client.get(`https://raw.githubusercontent.com${file.href}`)
       .then((response) => {
-        const fileRawHtml = response.data
-        const lineAndSize = parseFile(fileRawHtml)
+        const lineAndSize = parseFile(response)
         return { ...file, ...lineAndSize }
-      }).catch((err) => ({ ...file, error: err.response.statusText })))
+      }).catch((err) => ({ ...file, error: err.response.statusText || 'error' })))
 
   let foldersFiles = await Promise.allSettled(foldersPromises)
   foldersFiles = foldersFiles.map((result) => (result.status === 'fulfilled' ? result.value : result.reason))
