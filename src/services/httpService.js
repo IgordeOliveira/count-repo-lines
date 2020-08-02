@@ -3,6 +3,7 @@ const AxiosLogger = require('axios-logger')
 const { ConcurrencyManager } = require('axios-concurrency');
 const AxiosRetry = require('axios-retry');
 const redis = require('redis')
+const axiosDefaults = require('axios/lib/defaults');
 
 // setup redis client
 const redisClient = redis.createClient({
@@ -25,9 +26,24 @@ const client = setup({
     // add redis as store for cache
     store
   },
+  transformResponse: axiosDefaults.transformResponse.concat((data, headers) => {
+    if (data) {
+      let lines
+      try {
+        lines = JSON.stringify(data, null, 2).split('\n').length
+      } catch (e) {
+        lines = data.toString().split('\n').length - 1
+      }
+      headers['content-lines'] = lines
+    }
+    if (headers['content-lines'] === 0) {
+      headers['content-lines'] = JSON.stringify(data, null, 2).split('\n').length - 1
+    }
+    return data
+  })
 })
 
-client.interceptors.request.use(AxiosLogger.requestLogger);
+// client.interceptors.request.use(AxiosLogger.requestLogger);
 
 // SETUP of axios concurrency to avoid 429 too many request errors
 const MAX_CONCURRENT_REQUESTS = 50;

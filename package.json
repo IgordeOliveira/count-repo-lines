@@ -28,6 +28,8 @@
     "express": "^4.17.1",
     "helmet": "^3.23.3",
     "is-github-url": "^1.2.2",
+    "lodash.flatmapdeep": "^4.10.0",
+    "lodash.groupby": "^4.6.0",
     "morgan": "^1.10.0",
     "redis": "^3.0.2"
   },
