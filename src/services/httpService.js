@@ -31,7 +31,6 @@ const client = setup({
     if (data) {
       let lines
       if (isJSON.strict(data)) {
-        console.log(isJSON(data))
         lines = JSON.stringify(data, null, 2).split('\n').length
       } else {
         lines = data.toString().split('\n').length - 1
