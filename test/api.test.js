@@ -2,24 +2,12 @@ const request = require('supertest');
 
 const app = require('../src/app');
 
-describe('GET /api/v1', () => {
+describe('GET /api/repo-count-lines', () => {
   it('responds with a json message', (done) => {
     request(app)
-      .get('/api/v1')
+      .get('/api/repo-count-lines?repo=https://github.com/laravel/horizon')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, {
-        message: 'API - 👋🌎🌍🌏'
-      }, done);
-  });
-});
-
-describe('GET /api/v1/emojis', () => {
-  it('responds with a json message', (done) => {
-    request(app)
-      .get('/api/v1/emojis')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, ['😀', '😳', '🙄'], done);
+      .expect(200, done);
   });
 });
