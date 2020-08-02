@@ -1,0 +1,45 @@
+{
+  "name": "express-api-starter",
+  "version": "1.2.0",
+  "description": " A basic starter for an express.js API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint --fix src",
+    "test": "mocha --timeout 10000 --exit"
+  },
+  "keywords": [],
+  "author": "CJ R. <cj@null.computer> (https://w3cj.now.sh)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/w3cj/express-api-starter.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.1",
+    "axios-cache-adapter": "^2.5.0",
+    "axios-concurrency": "^1.0.3",
+    "axios-logger": "^2.3.1",
+    "axios-retry": "^3.1.8",
+    "cheerio": "^1.0.0-rc.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "is-github-url": "^1.2.2",
+    "is-json": "^2.0.1",
+    "lodash.flatmapdeep": "^4.10.0",
+    "lodash.groupby": "^4.6.0",
+    "morgan": "^1.10.0",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  }
+}
