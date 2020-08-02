@@ -22,6 +22,7 @@ const parseListFiles = (repoHtml) => {
 }
 
 const parseFile = (response) => ({
+  isFolder: undefined, // remove isFolder key for file
   lines: parseInt(response.headers['content-lines'], 10), // count lines of file
   bytes: parseInt(response.headers['content-length'], 10) // get bytes from header
 })
@@ -66,8 +67,7 @@ function flatFileTree(fileTree) {
 async function getRepoInfo(repoUrl) {
   let fileTree = await getFileTree(repoUrl)
   fileTree = flatFileTree(fileTree)
-
-  return fileTree
+  return groupBy(fileTree, (file) => file.extension)
 }
 
 module.exports = { getRepoInfo }
