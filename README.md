@@ -1,12 +1,11 @@
 # REPO COUNT LINES 
-[__LIVE DEMO__](https://count-repo-lines.herokuapp.com/api/repo-count-lines?repo=https://github.com/laravel/forge-monitor)
+[__LIVE DEMO__](https://count-repo-lines.herokuapp.com/api/repo-count-lines?repo=https://github.com/laravel/forge-monitor) | [__AVAILABLE ON DOCKERHUB__](https://hub.docker.com/r/igordeeoliveiradev/count-repo-lines)
 
 
 Trustly technical challenge repository
 
 API that returns the total number of lines and the total number of bytes of all the files of a given public Github repository, grouped by file extension.
 
-I chose to do it in node, because of the options is js is the one I am most familiar with. I don't usually do backend using js, in my current job I use php with laravel, except for some simple serverless functions that I do in node
 #### This project uses:
 - Node ( [Express API Starter](https://github.com/w3cj/express-api-starter) )
 - Redis for cache
@@ -35,7 +34,8 @@ yarn dev
 
 ## How to use
 
-Make a GET Request to http://localhost:5000/api/repo-count-lines?repo={{REPO_URL}}
+Make a GET Request to http://localhost:5000/api/repo-count-lines?repo={{REPO_URL}}  
+_REPO_URL need this in this formart: https://github.com/IgordeOliveira/count-repo-lines_
 
 ## Test
 
