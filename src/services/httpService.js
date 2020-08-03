@@ -27,6 +27,7 @@ const client = setup({
     // add redis as store for cache
     store
   },
+  // Transform response for add content-lines
   transformResponse: axiosDefaults.transformResponse.concat((data, headers) => {
     if (data) {
       let lines
@@ -40,7 +41,7 @@ const client = setup({
     return data
   })
 })
-
+// middleware for log all requests
 client.interceptors.request.use(AxiosLogger.requestLogger);
 
 // SETUP of axios concurrency to avoid 429 too many request errors

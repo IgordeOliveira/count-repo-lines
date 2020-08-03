@@ -11,6 +11,7 @@ router.get('/repo-count-lines', async (req, res) => {
   const { repo } = req.query
 
   const result = await getRepoInfo(repo)
+
   res.json(result)
 })
 
