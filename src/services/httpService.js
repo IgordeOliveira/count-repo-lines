@@ -41,7 +41,7 @@ const client = setup({
   })
 })
 
-// client.interceptors.request.use(AxiosLogger.requestLogger);
+client.interceptors.request.use(AxiosLogger.requestLogger);
 
 // SETUP of axios concurrency to avoid 429 too many request errors
 const MAX_CONCURRENT_REQUESTS = 50;

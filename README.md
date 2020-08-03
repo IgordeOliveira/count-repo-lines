@@ -1,45 +1,45 @@
-# Express API Starter
+# REPO COUNT LINES 
+[__LIVE DEMO__](https://count-repo-lines.herokuapp.com/api/repo-count-lines?repo=https://github.com/laravel/forge-monitor)
 
-Includes API Server utilities:
 
-* [morgan](https://www.npmjs.com/package/morgan)
-  * HTTP request logger middleware for node.js
-* [helmet](https://www.npmjs.com/package/helmet)
-  * Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
-* [dotenv](https://www.npmjs.com/package/dotenv)
-  * Dotenv is a zero-dependency module that loads environment variables from a `.env` file into `process.env`
+Trustly technical challenge repository
 
-Development utilities:
+API that returns the total number of lines and the total number of bytes of all the files of a given public Github repository, grouped by file extension.
 
-* [nodemon](https://www.npmjs.com/package/nodemon)
-  * nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
-* [eslint](https://www.npmjs.com/package/eslint)
-  * ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
-* [mocha](https://www.npmjs.com/package/mocha)
-  * ☕️ Simple, flexible, fun JavaScript test framework for Node.js & The Browser ☕️
-* [supertest](https://www.npmjs.com/package/supertest)
-  * HTTP assertions made easy via superagent.
+I chose to do it in node, because of the options is js is the one I am most familiar with. I don't usually do backend using js, in my current job I use php with laravel, except for some simple serverless functions that I do in node
+#### This project uses:
+- Node ( [Express API Starter](https://github.com/w3cj/express-api-starter) )
+- Redis for cache
+- Axios for HTTP requests ( Because of middleware functions (for cache, logs, etc.) )
+- Mocha for testing
+- Cheerio for DOM parse in node ( I saw that you were asked not to use web scrapping libs, but as there is nothing as a default for parse DOM in node, I chose to use this one. I imagine you referred to "web scrapping libs" as PhantonJS right?)
+
 
 ## Setup
 
+Copy ``.env.sample`` as ``.env`` and fill in your redis server connection data  
+
+If you don't have a redis server, in the project there is a docker-compose for a local network, so `docker-compose up -d`  
+
+Then install the dependencies
+
 ```
-npm install
+yarn install
 ```
 
-## Lint
+## Development Server
 
 ```
-npm run lint
+yarn dev
 ```
+
+## How to use
+
+Make a GET Request to http://localhost:5000/api/repo-count-lines?repo={{REPO_URL}}
 
 ## Test
 
 ```
-npm run test
+yarn test
 ```
 
-## Development
-
-```
-npm run dev
-```
