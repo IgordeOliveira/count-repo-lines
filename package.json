@@ -32,7 +32,7 @@
     "lodash.flatmapdeep": "^4.10.0",
     "lodash.groupby": "^4.6.0",
     "morgan": "^1.10.0",
-    "redis": "^3.0.2"
+    "redis": "^3.1.1"
   },
   "devDependencies": {
     "eslint": "^7.5.0",
