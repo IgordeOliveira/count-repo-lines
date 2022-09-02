@@ -1,5 +1,5 @@
 # REPO COUNT LINES 
-[__LIVE DEMO__](https://count-repo-lines.herokuapp.com/api/repo-count-lines?repo=https://github.com/laravel/forge-monitor) | [__AVAILABLE ON DOCKERHUB__](https://hub.docker.com/r/igordeeoliveiradev/count-repo-lines)
+[__AVAILABLE ON DOCKERHUB__](https://hub.docker.com/r/igordeeoliveiradev/count-repo-lines)
 
 API that returns the total number of lines and the total number of bytes of all the files of a given public Github repository, grouped by file extension.
 
